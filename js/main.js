@@ -1,7 +1,7 @@
 /** 
  *  author: Daniel Geymayer
- *  version: 1.1
- *  date: 2013-05-20
+ *  version: 1.2
+ *  date: 2013-05-31
  */
 
 address_dev = "10.63.26.21:98/todo/";
