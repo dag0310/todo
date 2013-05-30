@@ -1,0 +1,20 @@
+body {
+	font-size: 0.8em;
+}
+
+form input[type="text"] {
+	font-size: 1.1em;
+}
+
+form .ui-input-text {
+    display: inline-block;
+    width : 70%;
+    vertical-align: middle;
+}
+
+form > .ui-btn {
+    display: inline-block;
+    width: 10%;
+    vertical-align: middle;
+    margin: 0;
+}
