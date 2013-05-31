@@ -15,13 +15,12 @@ $(function() {
 		async: false,
 		cache: false,
 	});
-
+	
 	// Add ToDo
 	$(document).on('click', '#add_todo', function() {
 		var todo = document.getElementById("todo");
 		if (todo.value.trim() == "") {
-			todo.placeholder = "No empty ToDos allowed!";
-			refresh_list();
+			show_notification("No empty ToDos allowed!");
 			return false;
 		}
 		
@@ -29,7 +28,11 @@ $(function() {
 			type: "POST",
 			url: address + update_file,
 			cache: false,
-			data: { todo_text: todo.value, file: data_file, cmd: "add" },
+			data: {
+				todo_text: todo.value,
+				file: data_file,
+				cmd: "add",
+			},
 			success: refresh_list,
 			error: refresh_list
 		});
@@ -37,14 +40,17 @@ $(function() {
 		return false;
 	});
 	
-	
 	// Delete the selected ToDo
 	$(document).on('click', 'a', function() {
 		$.ajax({
 			type: "POST",
 			url: address + update_file,
 			cache: false,
-			data: { id: this.id, file: data_file, cmd: "del" },
+			data: {
+				id: this.id,
+				file: data_file,
+				cmd: "del"
+			},
 			success: refresh_list,
 			error: refresh_list
 		});
@@ -58,7 +64,10 @@ $(function() {
 			type: "POST",
 				url: address + update_file,
 				cache: false,
-				data: { file: data_file, cmd: "del_all" },
+				data: {
+					file: data_file,
+					cmd: "del_all"
+				},
 				success: refresh_list,
 				error: refresh_list
 		});
@@ -74,6 +83,17 @@ $(function() {
 	
 	refresh_list();
 });
+
+function show_notification(text) {
+	document.getElementById("notification").innerHTML = text;
+	$("#notification").animate({
+		bottom:'0px',
+	});
+	$("#notification").delay(2000);
+	$("#notification").animate({
+		bottom:'-30px',
+	});
+}
 
 function refresh_list() {
 	var todos = get_todos();
@@ -97,9 +117,8 @@ function refresh_list() {
 		ul.appendChild(li);
 	}
 	
-	var todo = document.getElementById("todo");
-	todo.value = "";
-	todo.placeholder = "What do you have ToDo?";
+	document.getElementById("todo").value = "";
+	document.getElementById("notification").innerHTML = "List refreshed";
 	$('ul#todos').listview('refresh');
 }
 
@@ -113,12 +132,10 @@ function get_todos() {
 		});
 	})
 	.done(function() {
-		console.log("ONLINE");
 		localStorage.setItem("todos", JSON.stringify(todos));
 		message = "";
 	})
 	.fail(function() {
-		console.log("OFFLINE");
 		todos = JSON.parse(localStorage.getItem("todos"));
 		message = "Watch out! you are offline!"
 	});

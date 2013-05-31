@@ -18,10 +18,9 @@ if (file_exists($file)) {
 			foreach ($json as $key => $value) {
 				if ((int) $key > $id) $id = (int) $key;
 			}
-			$id++;
 			
 			// add a child with ID as attribute and text as child
-			$json[$id] = array('text' => $todo_text);
+			$json[$id + 1] = array('text' => $todo_text);
 			break;
 		case 'del':
 			unset($json[$_POST['id']]);
@@ -36,7 +35,7 @@ if (file_exists($file)) {
 			exit;
 	}
 	
-	// save json to file
+	// save JSON to file
 	file_put_contents($file, json_encode($json));
 } else {
 	echo 'File not found!';
