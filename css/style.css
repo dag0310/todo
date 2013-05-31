@@ -19,7 +19,6 @@ form .ui-input-text {
 form > .ui-btn {
     display: inline-block;
     width: auto;
-    float:right;
     vertical-align: middle;
 }
 

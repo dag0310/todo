@@ -136,7 +136,6 @@ function refresh_list() {
 
 function get_todos() {
 	var todos = new Array();
-	var message = "";
 	
 	$.getJSON(address + data_file, function(data) {
 		$.each(data, function(key, value) {
@@ -151,8 +150,6 @@ function get_todos() {
 		todos = JSON.parse(localStorage.getItem("todos"));
 		color = "red";
 	});
-	
-	show_notification(message);
 	
 	return todos;
 }
