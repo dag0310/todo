@@ -85,14 +85,16 @@ $(function() {
 });
 
 function show_notification(text) {
-	document.getElementById("notification").innerHTML = text;
-	$("#notification").animate({
-		bottom:'0px',
-	});
-	$("#notification").delay(2000);
-	$("#notification").animate({
-		bottom:'-30px',
-	});
+	if (text.trim() != "") {
+		document.getElementById("notification").innerHTML = text;
+		$("#notification").animate({
+			bottom:'0px',
+		});
+		$("#notification").delay(2000);
+		$("#notification").animate({
+			bottom:'-30px',
+		});
+	}
 }
 
 function refresh_list() {
@@ -118,7 +120,7 @@ function refresh_list() {
 	}
 	
 	document.getElementById("todo").value = "";
-	document.getElementById("notification").innerHTML = "List refreshed";
+	show_navigation("List refreshed");
 	$('ul#todos').listview('refresh');
 }
 
@@ -140,7 +142,7 @@ function get_todos() {
 		message = "Watch out! you are offline!"
 	});
 	
-	$('#notification').text(message);
+	show_notification(message)
 	
 	return todos;
 }
