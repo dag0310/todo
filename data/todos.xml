@@ -4,4 +4,4 @@
 <!ELEMENT todo (#PCDATA)>
 <!ATTLIST todo id ID #REQUIRED>
 ]>
-<todos><todo id="2">50</todo></todos>
+<todos><todo id="2">50</todo><todo id="4">350</todo></todos>
