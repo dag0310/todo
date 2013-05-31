@@ -9,9 +9,10 @@ address_local = "data/";
 address = address_dev;
 data_file = "todos.json";
 update_file = "update_json.php";
-el_color = "red";
+color = "red";
 el_todo = document.getElementById("todo");
 el_todos = document.getElementById("todos");
+el_statusbar = document.getElementById("statusbar");
 el_notification = document.getElementById("notification");
 
 $(function() {
@@ -39,6 +40,8 @@ $(function() {
 			success: refresh_list,
 			error: refresh_list
 		});
+		
+		el_todo.value = "";
 		
 		return false;
 	});
@@ -84,18 +87,24 @@ $(function() {
 		return false;
 	});
 	
-	refresh_list();
+	refresh();
 });
+
+function refresh() {
+	refresh_list();
+	el_statusbar.style.backgroundColor = color;
+	timer = setTimeout(refresh, 1000);
+}
 
 function show_notification(text) {
 	if (text.trim() != "") {
 		notification.innerHTML = text;
 		$("#notification").animate({
-			bottom:'0px',
+			top: '0px',
 		});
-		$("#notification").delay(2000);
+		$("#notification").delay(1500);
 		$("#notification").animate({
-			bottom:'-30px',
+			top: '-30px',
 		});
 	}
 }
@@ -121,8 +130,7 @@ function refresh_list() {
 		el_todos.appendChild(li);
 	}
 	
-	el_todo.value = "";
-	show_notification("List refreshed");
+	// show_notification("List refreshed");
 	$('ul#todos').listview('refresh');
 }
 
@@ -137,11 +145,10 @@ function get_todos() {
 	})
 	.done(function() {
 		localStorage.setItem("todos", JSON.stringify(todos));
-		color = "green";
+		color = "#479D34";
 	})
 	.fail(function() {
 		todos = JSON.parse(localStorage.getItem("todos"));
-		message = "Watch out! you are offline!"
 		color = "red";
 	});
 	
