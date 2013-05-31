@@ -20,7 +20,7 @@ if (file_exists($file)) {
 			}
 			
 			// add a child with ID as attribute and text as child
-			$json[$id + 1] = array('text' => $todo_text);
+			$json[$id + 1] = array('text' => $todo_text, 'timestamp' => date('Y-m-d'));
 			break;
 		case 'del':
 			unset($json[$_POST['id']]);
