@@ -9,6 +9,10 @@ address_local = "data/";
 address = address_dev;
 data_file = "todos.json";
 update_file = "update_json.php";
+el_color = "red";
+el_todo = document.getElementById("todo");
+el_todos = document.getElementById("todos");
+el_notification = document.getElementById("notification");
 
 $(function() {
 	$.ajaxSetup({
@@ -18,8 +22,7 @@ $(function() {
 	
 	// Add ToDo
 	$(document).on('click', '#add_todo', function() {
-		var todo = document.getElementById("todo");
-		if (todo.value.trim() == "") {
+		if (el_todo.value.trim() == "") {
 			show_notification("No empty ToDos allowed!");
 			return false;
 		}
@@ -29,7 +32,7 @@ $(function() {
 			url: address + update_file,
 			cache: false,
 			data: {
-				todo_text: todo.value,
+				todo_text: el_todo.value,
 				file: data_file,
 				cmd: "add",
 			},
@@ -86,7 +89,7 @@ $(function() {
 
 function show_notification(text) {
 	if (text.trim() != "") {
-		document.getElementById("notification").innerHTML = text;
+		notification.innerHTML = text;
 		$("#notification").animate({
 			bottom:'0px',
 		});
@@ -99,8 +102,7 @@ function show_notification(text) {
 
 function refresh_list() {
 	var todos = get_todos();
-	var ul = document.getElementById("todos");
-	ul.innerHTML = "";
+	el_todos.innerHTML = "";
 	
 	// create a list items for all todos in the list and append them to the list
 	for (var i = 0; i < todos.length; i++) {
@@ -116,11 +118,11 @@ function refresh_list() {
 		li.setAttribute("data-icon", "delete");
 		li.appendChild(a);
 		
-		ul.appendChild(li);
+		el_todos.appendChild(li);
 	}
 	
-	document.getElementById("todo").value = "";
-	show_navigation("List refreshed");
+	el_todo.value = "";
+	show_notification("List refreshed");
 	$('ul#todos').listview('refresh');
 }
 
@@ -135,14 +137,15 @@ function get_todos() {
 	})
 	.done(function() {
 		localStorage.setItem("todos", JSON.stringify(todos));
-		message = "";
+		color = "green";
 	})
 	.fail(function() {
 		todos = JSON.parse(localStorage.getItem("todos"));
 		message = "Watch out! you are offline!"
+		color = "red";
 	});
 	
-	show_notification(message)
+	show_notification(message);
 	
 	return todos;
 }
