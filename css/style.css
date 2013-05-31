@@ -12,15 +12,15 @@ form input[type="text"] {
 
 form .ui-input-text {
     display: inline-block;
-    width : 70%;
+    width : 60%;
     vertical-align: middle;
 }
 
 form > .ui-btn {
     display: inline-block;
-    width: 10%;
+    width: auto;
+    float:right;
     vertical-align: middle;
-    margin: 0;
 }
 
 #statusbar, #notification {
