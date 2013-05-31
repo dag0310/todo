@@ -4,18 +4,16 @@
  *  date: 2013-05-31
  */
 
-address_dev = "http://10.0.0.109:98/todo/";
-address_local = "";
+address_dev = "http://10.0.0.109:98/todo/data/";
+address_local = "data/";
 address = address_dev;
-xml_file = "data/todos.xml";
-json_file = "data/todos.json";
-php_add = "data/add_item.php";
-php_del = "data/del_item.php";
-php_delall = "data/del_all.php";
+data_file = "todos.json";
+update_file = "update_json.php";
 
 $(function() {
 	$.ajaxSetup({
-		async: false
+		async: false,
+		cache: false,
 	});
 
 	// Add ToDo
@@ -29,9 +27,24 @@ $(function() {
 		
 		$.ajax({
 			type: "POST",
-			url: address + php_add,
+			url: address + update_file,
 			cache: false,
-			data: { todo_text: todo.value, file: xml_file },
+			data: { todo_text: todo.value, file: data_file, cmd: "add" },
+			success: refresh_list,
+			error: refresh_list
+		});
+		
+		return false;
+	});
+	
+	
+	// Delete the selected ToDo
+	$(document).on('click', 'a', function() {
+		$.ajax({
+			type: "POST",
+			url: address + update_file,
+			cache: false,
+			data: { id: this.id, file: data_file, cmd: "del" },
 			success: refresh_list,
 			error: refresh_list
 		});
@@ -43,25 +56,11 @@ $(function() {
 	$(document).on('click', '#delete_all', function() {
 		$.ajax({
 			type: "POST",
-				url: address + php_delall,
+				url: address + update_file,
 				cache: false,
-				data: { file: xml_file },
+				data: { file: data_file, cmd: "del_all" },
 				success: refresh_list,
 				error: refresh_list
-		});
-		
-		return false;
-	});
-	
-	// Delete the selected ToDo
-	$(document).on('click', 'a', function() {
-		$.ajax({
-			type: "POST",
-			url: address + php_del,
-			cache: false,
-			data: { id: this.id, file: xml_file },
-			success: refresh_list,
-			error: refresh_list
 		});
 		
 		return false;
@@ -72,14 +71,6 @@ $(function() {
 		refresh_list();
 		return false;
 	});
-	
-	// $.ajax({
-			// dataType: "json",
-			// url: address + json_file,
-			// cache: false,
-			// success: load_items,
-			// error: refresh_list
-		// });
 	
 	refresh_list();
 });
@@ -114,9 +105,9 @@ function refresh_list() {
 
 function get_todos() {
 	var todos = new Array();
-	var color = "red";
+	var message = "";
 	
-	$.getJSON(address + json_file, function(data) {
+	$.getJSON(address + data_file, function(data) {
 		$.each(data, function(key, value) {
 			todos.push(new todo(key, value.text));
 		});
@@ -124,14 +115,15 @@ function get_todos() {
 	.done(function() {
 		console.log("ONLINE");
 		localStorage.setItem("todos", JSON.stringify(todos));
-		color = "green";
+		message = "";
 	})
 	.fail(function() {
 		console.log("OFFLINE");
 		todos = JSON.parse(localStorage.getItem("todos"));
+		message = "Watch out! you are offline!"
 	});
 	
-	// document.body.style.backgroundColor = color;
+	$('#notification').text(message);
 	
 	return todos;
 }

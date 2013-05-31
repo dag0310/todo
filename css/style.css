@@ -18,3 +18,8 @@ form > .ui-btn {
     vertical-align: middle;
     margin: 0;
 }
+
+#notification {
+	margin-top: 10px;
+	color: red;
+}
