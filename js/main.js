@@ -1,7 +1,7 @@
 /** 
  *  author: Daniel Geymayer
- *  version: 1.2
- *  date: 2013-05-31
+ *  version: 1.3
+ *  date: 2013-06-01
  */
 
 address_dev = "http://10.0.0.109:98/todo/data/";
