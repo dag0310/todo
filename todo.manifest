@@ -1,0 +1,24 @@
+CACHE MANIFEST
+
+# Need to change contents of this page to let user know of updated content.
+# Version: 1.0, 2013-06-01
+
+CACHE:
+# files to be cached on the device go here. Can also specify absolute URLs.
+http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css
+http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js
+http://code.jquery.com/jquery-1.7.1.min.js
+http://html5shim.googlecode.com/svn/trunk/html5.js
+css/style.css
+js/main.js
+favicon.png
+index.html
+
+# FALLBACK:
+# if resource is inaccessible, then use this .html file to give notice.
+# if any folders before the / are inaccessible, then the file to the right is served.
+/ offline.html
+
+# NETWORK:
+# Resources that require online access, like login.php page.
+#login.php
