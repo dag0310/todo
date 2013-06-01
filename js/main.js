@@ -9,7 +9,7 @@ address_local = "data/";
 address = address_dev;
 data_file = "todos.json";
 update_file = "update_json.php";
-color = "red";
+con = new connection(false);
 el_todo = document.getElementById("todo");
 el_todos = document.getElementById("todos");
 el_statusbar = document.getElementById("statusbar");
@@ -92,7 +92,7 @@ $(function() {
 
 function refresh() {
 	refresh_list();
-	el_statusbar.style.backgroundColor = color;
+	el_statusbar.style.backgroundColor = con.color;
 	timer = setTimeout(refresh, 1000);
 }
 
@@ -144,11 +144,11 @@ function get_todos() {
 	})
 	.done(function() {
 		localStorage.setItem("todos", JSON.stringify(todos));
-		color = "#479D34";
+		con.setStatus(true);
 	})
 	.fail(function() {
 		todos = JSON.parse(localStorage.getItem("todos"));
-		color = "red";
+		con.setStatus(false);
 	});
 	
 	return todos;
@@ -157,4 +157,14 @@ function get_todos() {
 function todo(id, text) {
 	this.id = id;
 	this.text = text;
+}
+
+function connection(status) {
+	this.setStatus = setStatus;
+	setStatus(status);
+	
+	function setStatus(status) {
+		this.status = status;
+		this.color = (status) ? "#479D34" : "#FF0000";
+	}
 }
