@@ -2,11 +2,18 @@
 <html manifest="todo.manifest" lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta name="author" content="Daniel Geymayer">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="ToDo">
 	<title>ToDo</title>
 	<link rel="icon" href="favicon.png" type="image/png">
-	<link rel="apple-touch-icon" href="favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="img/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-startup-image" href="img/startup.png">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -20,7 +27,7 @@
 		<div data-role="header"></div>
 		<div data-role="content">
 			<form>
-                <input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" autofocus />
+                <input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" />
                 <input type="submit" data-type="button" id="add_todo" data-icon="plus" data-iconpos="left" data-mini="true" data-theme="b" value="Add" />
 			</form>
 			<!-- <form><button type="submit" id="delete_all" data-theme="b">Delete all</button></form> -->
