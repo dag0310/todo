@@ -16,33 +16,29 @@ form .ui-input-text {
     vertical-align: middle;
 }
 
+form #download, form #upload {
+	width: 50%;
+}
+
 form > .ui-btn {
     display: inline-block;
     width: auto;
+    margin: 0;
+    padding: 3px 8px;
     vertical-align: middle;
-}
-
-#statusbar, #notification {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 0.8em;
-	position: fixed;
-	text-shadow: none;
-	font-weight: normal;
-	text-align: center;
-	width: 100%;
-	height: 10px;
-	padding: 3px 0;
 }
 
 #statusbar {
 	top: 0;
 	box-shadow: 0 1px 5px #333;
-	z-index: 3;
-}
-
-#notification {
-	top: -30px;
-	background-color: transparent;
 	color: #FFF;
-	z-index: 5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.85em;
+	position: fixed;
+	text-shadow: 0 0 2px #000;
+	font-weight: normal;
+	text-align: center;
+	width: 100%;
+	height: 10px;
+	padding: 3px 0;
 }

@@ -4,21 +4,22 @@
  *  date: 2013-06-01
  */
 
-address_dev = "http://10.0.0.109:98/todo/data/";
-address_local = "data/";
-address = address_dev;
-data_file = "todos.json";
-update_file = "update_json.php";
-con = new connection(false);
-el_todo = document.getElementById("todo");
-el_todos = document.getElementById("todos");
-el_statusbar = document.getElementById("statusbar");
-el_notification = document.getElementById("notification");
+var address_dev = "http://10.0.0.109:98/todo/data/";
+var address_local = "data/";
+var address = address_dev;
+var data_file = "todos.json";
+var update_file = "update_json.php";
+var con = new connection(true);
+var todos = new Array();
+var el_todo = document.getElementById("todo");
+var el_todos = document.getElementById("todos");
+var el_statusbar = document.getElementById("statusbar");
 
 $(function() {
 	$.ajaxSetup({
 		async: false,
 		cache: false,
+		timeout: 2000,
 	});
 	
 	// Add ToDo
@@ -28,19 +29,29 @@ $(function() {
 			return false;
 		}
 		
-		$.ajax({
-			type: "POST",
-			url: address + update_file,
-			cache: false,
-			data: {
-				todo_text: el_todo.value,
-				file: data_file,
-				cmd: "add",
-			},
-			success: refresh_list,
-			error: refresh_list
-		});
+		var id = 0;
+		for (var i = 0; i < todos.length; i++) {
+			if (todos[i].id > id) id = todos[i].id;
+		}
+		todos.push(new todo(id + 1, el_todo.value));
+		localStorage.setItem("todos", JSON.stringify(todos));
 		
+		if (con.status) {
+			$.ajax({
+				type: "POST",
+				url: address + update_file,
+				cache: false,
+				data: {
+					todo_text: el_todo.value,
+					file: data_file,
+					cmd: "add",
+				},
+				success: ajax_success,
+				error: ajax_error
+			});
+		}
+		
+		show_notification("'" + el_todo.value + "' added.");
 		el_todo.value = "";
 		
 		return false;
@@ -48,72 +59,118 @@ $(function() {
 	
 	// Delete the selected ToDo
 	$(document).on('click', 'a', function() {
+		var todo_text = "";
+		for (var i = 0; i < todos.length; i++) {
+			if (todos[i].id == this.id) {
+				todo_text = todos[i].text;
+				todos.splice(i, 1);
+			}
+		}
+		localStorage.setItem("todos", JSON.stringify(todos));
+		
+		if (con.status) {
+			$.ajax({
+				type: "POST",
+				url: address + update_file,
+				cache: false,
+				data: {
+					id: this.id,
+					file: data_file,
+					cmd: "del"
+				},
+				success: ajax_success,
+				error: ajax_error
+			});
+		}
+		
+		show_notification("'" + todo_text + "' deleted.");
+		
+		return false;
+	});
+	
+	// Delete all ToDos	
+	$(document).on('click', '#delete_all', function() {
+		todos = new Array();
+		localStorage.setItem("todos", JSON.stringify(todos));
+		
+		if (con.status) {
+			$.ajax({
+				type: "POST",
+					url: address + update_file,
+					cache: false,
+					data: {
+						file: data_file,
+						cmd: "del_all"
+					},
+					success: ajax_success,
+					error: ajax_error
+			});
+		}
+		
+		show_notification("All ToDos deleted.");
+		
+		return false;
+	});
+	
+	// Download from server (override local data)
+	$(document).on('click', '#download', function() {
+		ajax_success();
+		
+		return false;
+	});
+	
+	// Upload to server (override server data)
+	$(document).on('click', '#upload', function() {
 		$.ajax({
 			type: "POST",
 			url: address + update_file,
 			cache: false,
 			data: {
-				id: this.id,
+				todos: todos,
 				file: data_file,
-				cmd: "del"
+				cmd: "set",
 			},
-			success: refresh_list,
-			error: refresh_list
+			success: upload_success,
+			error: upload_error
 		});
 		
-		return false;
-	});
-	
-	// Delete all ToDos
-	$(document).on('click', '#delete_all', function() {
-		$.ajax({
-			type: "POST",
-				url: address + update_file,
-				cache: false,
-				data: {
-					file: data_file,
-					cmd: "del_all"
-				},
-				success: refresh_list,
-				error: refresh_list
-		});
-		
-		return false;
-	});
-	
-	// Refresh the list
-	$(document).on('click', '#refresh', function() {
-		refresh_list();
 		return false;
 	});
 	
 	refresh();
 });
 
-function refresh() {
-	refresh_list();
-	el_statusbar.style.backgroundColor = con.color;
-	timer = setTimeout(refresh, 1000);
+function upload_success() {
+	show_notification("Upload was successful.")
+	ajax_success();
 }
 
-function show_notification(text) {
-	if (text.trim() != "") {
-		notification.innerHTML = text;
-		$("#notification").animate({
-			top: '0px',
-		});
-		$("#notification").delay(1500);
-		$("#notification").animate({
-			top: '-30px',
-		});
-	}
+function upload_error() {
+	show_notification("Upload failed.")
+	ajax_error();
+}
+
+function ajax_success() {
+	con.setStatus(true);
+	refresh();
+}
+
+function ajax_error() {
+	con.setStatus(false);
+	refresh();
+}
+
+function refresh() {
+	el_statusbar.style.backgroundColor = con.color;
+	refresh_list();
+	timer = setTimeout(refresh, 1500);
 }
 
 function refresh_list() {
-	var todos = get_todos();
+	refresh_todos();
 	el_todos.innerHTML = "";
 	
-	// create a list items for all todos in the list and append them to the list
+	// Create list items for all ToDos in the list and append them to the list
 	for (var i = 0; i < todos.length; i++) {
 		var id = todos[i].id;
 		var text = todos[i].text;
@@ -130,28 +187,34 @@ function refresh_list() {
 		el_todos.appendChild(li);
 	}
 	
-	// show_notification("List refreshed");
 	$('ul#todos').listview('refresh');
 }
 
-function get_todos() {
-	var todos = new Array();
-	
-	$.getJSON(address + data_file, function(data) {
-		$.each(data, function(key, value) {
-			todos.push(new todo(key, value.text));
+function refresh_todos() {
+	if (con.status) {
+		todos = new Array();
+		$.getJSON(address + data_file, function(data) {
+			$.each(data, function(key, value) {
+				todos.push(new todo(key, value.text));
+			});
+		})
+		.done(function() {
+			localStorage.setItem("todos", JSON.stringify(todos));
+		})
+		.fail(function() {
+			todos = JSON.parse(localStorage.getItem("todos"));
+			con.setStatus(false);
+			show_notification("Could not establish connection.");
 		});
-	})
-	.done(function() {
-		localStorage.setItem("todos", JSON.stringify(todos));
-		con.setStatus(true);
-	})
-	.fail(function() {
+	} else {
 		todos = JSON.parse(localStorage.getItem("todos"));
-		con.setStatus(false);
-	});
-	
-	return todos;
+	}
+}
+
+function show_notification(text) {
+	if (text.trim() != "") {
+		el_statusbar.innerHTML = text;
+	}
 }
 
 function todo(id, text) {
@@ -161,7 +224,7 @@ function todo(id, text) {
 
 function connection(status) {
 	this.setStatus = setStatus;
-	setStatus(status);
+	this.setStatus(status);
 	
 	function setStatus(status) {
 		this.status = status;

@@ -30,6 +30,9 @@ if (file_exists($file)) {
 				unset($json[$key]);
 			}
 			break;
+		case 'set':
+			$json = $_POST['todos'];
+			break;
 		default:
 			echo 'Command not found!';
 			exit;
