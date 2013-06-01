@@ -14,6 +14,7 @@ var todos = new Array();
 var el_todo = document.getElementById("todo");
 var el_todos = document.getElementById("todos");
 var el_statusbar = document.getElementById("statusbar");
+var el_footer = document.getElementById("footer");
 
 $(function() {
 	$.ajaxSetup({
@@ -162,6 +163,7 @@ function ajax_error() {
 
 function refresh() {
 	el_statusbar.style.backgroundColor = con.color;
+	footer.style.display = con.footer_display;
 	refresh_list();
 	timer = setTimeout(refresh, 1500);
 }
@@ -228,6 +230,12 @@ function connection(status) {
 	
 	function setStatus(status) {
 		this.status = status;
-		this.color = (status) ? "#479D34" : "#FF0000";
+		if (status) {
+			this.color = "#479D34";
+			this.footer_display = "none";
+		} else {
+			this.color = "#FF0000";
+			this.footer_display = "";
+		}
 	}
 }
