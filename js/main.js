@@ -1,11 +1,10 @@
 /** 
  *  author: Daniel Geymayer
  *  version: 1.3
- *  date: 2013-06-01
+ *  date: 2013-06-14
  */
 
-var address_dev = "http://10.0.0.109:98/todo/data/";
-var address_local = "data/";
+var address_dev = "http://localhost/todo/data/";
 var address = address_dev;
 var data_file = "todos.json";
 var update_file = "update_json.php";
@@ -165,7 +164,7 @@ function refresh() {
 	el_statusbar.style.backgroundColor = con.color;
 	footer.style.display = con.footer_display;
 	refresh_list();
-	timer = setTimeout(refresh, 1500);
+	timer = setTimeout(refresh, 15000);
 }
 
 function refresh_list() {
