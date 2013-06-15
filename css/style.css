@@ -24,17 +24,22 @@ form > .ui-btn {
 #statusbar {
 	z-index: 100;
 	position: fixed;
+	background-color: #666;
 	top: 0;
-	padding: 23px 0 3px;
+	padding: 25px 0 0;
+	height: 18px;
 	margin: 0;
-	box-shadow: 0 1px 5px #333;
-	color: #FFF;
 	width: 100%;
+	box-shadow: 0 0 5px #000;
+}
+
+#statusbar div {
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 0.9em;
 	text-align: center;
 	text-shadow: 0 0 2px #000;
+	color: #FFF;
 }
 
 #todos {
