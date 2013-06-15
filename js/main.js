@@ -1,9 +1,10 @@
 /** 
  *  author: Daniel Geymayer
- *  version: 1.3
+ *  version: 1.4
  *  date: 2013-06-15
  */
 
+var timer;
 var el_todo = document.getElementById("todo");
 var el_todos = document.getElementById("todos");
 var el_statusbar = document.getElementById("statusbar");
@@ -97,13 +98,13 @@ $(function() {
 		if (con.status) {
 			$.ajax({
 				type: "POST",
-					url: address + update_file,
-					data: {
-						file: data_file,
-						cmd: "del_all"
-					},
-					success: ajax_success,
-					error: ajax_error
+				url: address + update_file,
+				data: {
+					file: data_file,
+					cmd: "del_all"
+				},
+				success: ajax_success,
+				error: ajax_error
 			});
 		} else refreshPage();
 		
@@ -149,9 +150,11 @@ $(function() {
 	}
 });
 
+// AJAX FUNCTIONS
 function upload_success() {
 	updateStatusbar("Upload was successful")
-	timer = setTimeout(timeoutPage, refreshRate);
+	clearTimeout(timer);
+	timeoutPage();
 	ajax_success();
 }
 
@@ -162,7 +165,8 @@ function upload_error() {
 
 function download_success() {
 	updateStatusbar("Download was successful")
-	timer = setTimeout(timeoutPage, refreshRate);
+	clearTimeout(timer);
+	timeoutPage();
 	ajax_success();
 }
 
@@ -181,6 +185,7 @@ function ajax_error() {
 	refreshPage();
 }
 
+// MAIN FUNCTIONS
 function timeoutPage(forceAjax) {
 	if (forceAjax == null) forceAjax = false;
 	refreshPage(forceAjax);
@@ -192,11 +197,31 @@ function refreshPage(forceAjax) {
 	
 	// REFRESH LIST
 	if (con.status || forceAjax) {
-		getTodos(forceAjax);
+		todos = new Array();
+		
+		$.getJSON(address + data_file, function(data) {
+			$.each(data, function(key, value) {
+				todos.push(new todo(key, value.text));
+			});
+		})
+		.done(function() {
+			localStorage.setItem("todos", JSON.stringify(todos));
+			con.setStatus(true);
+		})
+		.fail(function() {
+			todos = JSON.parse(localStorage.getItem("todos"));
+			con.setStatus(false);
+		})
+		.always(function() {
+			refreshList();
+		});
 	} else {
 		todos = JSON.parse(localStorage.getItem("todos"));
+		refreshList();
 	}
-	
+}
+
+function refreshList() {
 	el_todos.innerHTML = "";
 	
 	// Create list items for all ToDos in the list and append them to the list
@@ -221,24 +246,6 @@ function refreshPage(forceAjax) {
 	// Set interface according to connection (online / offline)
 	el_statusbar.style.backgroundColor = con.color;
 	footer.style.display = con.footer_display;
-}
-
-function getTodos() {
-	todos = new Array();
-	
-	$.getJSON(address + data_file, function(data) {
-		$.each(data, function(key, value) {
-			todos.push(new todo(key, value.text));
-		});
-	})
-	.done(function() {
-		localStorage.setItem("todos", JSON.stringify(todos));
-		con.setStatus(true);
-	})
-	.fail(function() {
-		todos = JSON.parse(localStorage.getItem("todos"));
-		con.setStatus(false);
-	});
 }
 
 function updateStatusbar(text) {

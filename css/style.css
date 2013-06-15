@@ -3,7 +3,7 @@ body {
 }
 
 form {
-	margin: 40px 0 0;
+	margin: 20px 0 0;
 }
 
 form .ui-input-text {
@@ -26,14 +26,14 @@ form > .ui-btn {
 	position: fixed;
 	background-color: #666;
 	top: 0;
-	padding: 25px 0 0;
-	height: 18px;
+	height: 20px;
 	margin: 0;
 	width: 100%;
 	box-shadow: 0 0 5px #000;
 }
 
 #statusbar div {
+	padding: 3px 0 0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 0.9em;
