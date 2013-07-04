@@ -68,3 +68,7 @@ form > .ui-btn {
 #upload {
 	float: right;
 }
+
+.ui-icon {
+    background-image: url(../img/icons-18-white.png);
+}
