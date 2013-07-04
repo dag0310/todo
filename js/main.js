@@ -1,7 +1,7 @@
 /** 
  *  author: Daniel Geymayer
- *  version: 1.4
- *  date: 2013-06-15
+ *  version: 1.4.2
+ *  date: 2013-07-04
  */
 
 var timer;
@@ -11,7 +11,7 @@ var el_statusbar = document.getElementById("statusbar");
 var el_notification = document.getElementById("notification");
 var el_footer = document.getElementById("footer");
 
-var address = "http://10.63.26.21/todo/data/";
+var address = "http://127.0.0.1/todo/data/";
 var data_file = "todos.json";
 var update_file = "update_json.php";
 var todos = new Array();
@@ -189,7 +189,7 @@ function ajax_error() {
 function timeoutPage(forceAjax) {
 	if (forceAjax == null) forceAjax = false;
 	refreshPage(forceAjax);
-	timer = setTimeout(timeoutPage, refreshRate);
+	// timer = setTimeout(timeoutPage, refreshRate);
 }
 
 function refreshPage(forceAjax) {
