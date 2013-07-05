@@ -17,17 +17,17 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div id="statusbar"><div id="notification">Welcome to ToDo!</div></div>
 	<div data-role="page" id="main" data-title="ToDo">
 		<div data-role="header"></div>
 		<div data-role="content">
 			<form>
-                <input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" />
-                <input type="submit" data-type="button" id="add_todo" data-icon="plus" data-iconpos="left" data-mini="true" data-theme="b" value="Add" />
+				<input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" />
+				<input type="submit" data-type="button" id="add_todo" data-icon="plus" data-iconpos="left" data-mini="true" data-theme="b" value="Add" />
 			</form>
 			<ul id="todos" data-role="listview" data-inset="true"></ul>
 		</div>
 	</div>
-	<div id="statusbar"><div id="notification">Welcome to ToDo!</div></div>
 	<div id="footer">
         <input type="button" data-type="button" id="download" data-icon="arrow-d" data-iconpos="left" data-mini="true" data-theme="b" value="Download" />
         <input type="button" data-type="button" id="upload" data-icon="arrow-u" data-iconpos="left" data-mini="true" data-theme="b" value="Upload" />

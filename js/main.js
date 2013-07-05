@@ -1,7 +1,7 @@
 /** 
  *  author: Daniel Geymayer
- *  version: 1.4.2
- *  date: 2013-07-04
+ *  version: 1.4.3
+ *  date: 2013-07-05
  */
 
 var timer;
@@ -61,7 +61,7 @@ $(function() {
 	});
 	
 	// Delete the selected ToDo
-	$(document).on('click', 'a', function() {
+	$(document).on('click', 'a.ui-link-inherit', function() {
 		var todo_text = "";
 		for (var i = 0; i < todos.length; i++) {
 			if (todos[i].id == this.id) {
