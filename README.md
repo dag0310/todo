@@ -1,4 +1,44 @@
-todo
-====
+What is ToDo?
+=============
 
-Easy-to-use todo list web application with offline support.
+ToDo is an easy-to-use todo list web application with offline support.
+
+
+Main features
+=============
+
+- Easy setup (just copy-paste the files)
+- Offline caching of page and user data
+- Responsive -- works great on mobile devices
+- Web-app capable (especially iOS 6+)
+- Statusbar informs about previous actions and whether you're online or not
+
+
+Software requirements
+=====================
+
+- Some web server
+- PHP 5+
+
+
+Installation
+============
+
+- Step 1: Copy files to web server.
+- Step 2: ?
+- Step 3: Profit!
+
+
+Technologies used
+=================
+
+- HTML5, Javascript, CSS3
+- jQuery mobile
+- AJAX
+- PHP
+
+
+License
+=======
+
+This software is distributed under the GNU General Public Licence version 3 (GPL v3).
