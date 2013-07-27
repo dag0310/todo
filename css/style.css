@@ -7,18 +7,20 @@ form {
 }
 
 form .ui-input-text {
-    display: inline-block;
-    width : 65%;
-    vertical-align: middle;
+	display: inline-block;
+	width : 64%;
+	height: 20px;
+	vertical-align: middle;
 	font-size: 1.1em;
 }
 
 form > .ui-btn {
-    display: inline-block;
-    width: auto;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
+	display: inline-block;
+	width: 30%;
+	float:right;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
 }
 
 #statusbar {
@@ -32,7 +34,7 @@ form > .ui-btn {
 	box-shadow: 0 0 5px #000;
 }
 
-#statusbar div {
+#notification {
 	padding: 3px 0 0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
@@ -43,7 +45,6 @@ form > .ui-btn {
 }
 
 #main {
-	max-width: 1024px;
 }
 
 #todos {
@@ -74,5 +75,5 @@ form > .ui-btn {
 }
 
 .ui-icon {
-    background-image: url(../img/icons-18-white.png);
+	background-image: url(../img/icons-18-white.png);
 }
