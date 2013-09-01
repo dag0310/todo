@@ -497,5 +497,5 @@ var refresh = new PullToRefresh(container_el, pullrefresh_el, pullrefresh_icon_e
 refresh.handler = function() {
 	refreshPage();
 	this.slideUp();
-	updateStatusbar("List refreshed");
+	updateStatusbar("Refresh triggered");
 };
