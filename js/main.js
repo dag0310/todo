@@ -11,7 +11,7 @@ var el_statusbar = document.getElementById("statusbar");
 var el_notification = document.getElementById("notification");
 var el_footer = document.getElementById("footer");
 
-var address = "http://127.0.0.1/todo/data/";
+var address = "http://localhost/todo/data/";
 var data_file = "todos.json";
 var update_file = "update_json.php";
 var todos = new Array();
