@@ -1,7 +1,7 @@
 /**
  *  author: Daniel Geymayer
- *  version: 1.5
- *  date: 2013-08-29
+ *  version: 1.7
+ *  date: 2014-06-22
  */
 
 var timer;
@@ -11,7 +11,7 @@ var el_statusbar = document.getElementById("statusbar");
 var el_notification = document.getElementById("notification");
 var el_footer = document.getElementById("footer");
 
-var address = "http://localhost/todo/data/";
+var address = baseUrl + "data/";
 var data_file = "todos.json";
 var update_file = "update_json.php";
 var todos = new Array();
