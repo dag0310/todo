@@ -180,7 +180,6 @@ form > .ui-btn {
 @-webkit-keyframes rotate{ 0%{ -webkit-transform: rotate(0deg); } 100%{ -webkit-transform: rotate(360deg); } }
 
 #pullrefresh .icon.loading {
-	background: url(img/spinner.png) no-repeat;
 	width: 19px;
 	height: 19px;
 	background-size: 100%;
