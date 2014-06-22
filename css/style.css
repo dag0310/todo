@@ -147,7 +147,6 @@ form > .ui-btn {
 
 /* arrow icon */
 #pullrefresh .icon.arrow {
-	background: url(img/arrow.png) no-repeat;
 	width: 71px;
 	height: 28px;
 	bottom: 10px;
