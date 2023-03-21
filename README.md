@@ -18,7 +18,8 @@ Software requirements
 =====================
 
 - Some web server
-- PHP 5+
+- PHP 5.x
+- SQLite 3.x
 
 
 Installation
@@ -29,8 +30,8 @@ Installation
 - Step 3: Profit!
 
 
-Technologies used
-=================
+Technologies
+============
 
 - HTML5, Javascript, CSS3
 - jQuery mobile
@@ -41,4 +42,4 @@ Technologies used
 License
 =======
 
-This software is distributed under the GNU General Public Licence version 3 (GPL v3).
+This software is distributed under the GNU General Public License version 3 (GPL v3).

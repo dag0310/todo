@@ -8,44 +8,72 @@
 	<meta name="author" content="Daniel Geymayer">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="icon" href="favicon.png" type="image/png">
+	<link rel="icon" href="img/favicon.png" type="image/png">
 	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png">
 	<link rel="apple-touch-startup-image" href="img/startup.png">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script>
+		if (localStorage.user_id > 0) {
+			self.location = "#home";
+		} else {
+			self.location = "#login";
+		}
+	</script>
 </head>
 <body>
-<div id="container">
+<!-- <div id="container">
 	<div id="pullrefresh">
-        <div class="message">
-            <div id="pullrefresh-icon" class="icon arrow arrow-down"></div>
-            <span></span>
-        </div>
-    </div>
-    
-	<div id="statusbar"><div id="notification">Welcome to ToDo!</div></div>
-	<div data-role="page" id="main" data-title="ToDo">
-		<div data-role="header"></div>
-		<div data-role="content">
-			<form>
-				<input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" />
-				<input type="submit" data-type="button" id="add_todo" data-icon="plus" data-iconpos="left" data-mini="true" data-theme="b" value="Add" />
-			</form>
-			<ul id="todos" data-role="listview" data-inset="true"></ul>
+		<div class="message">
+			<div id="pullrefresh-icon" class="icon arrow arrow-down"></div>
+			<span></span>
 		</div>
 	</div>
+</div> -->
+	
+<div data-role="page" id="home" data-title="ToDo">
+	<div data-role="header"></div>
+	<div data-role="content">
+		<div id="statusbar"><div id="notification">Welcome to ToDo!</div></div>
+		<form>
+			<input type="text" id="todo" name="todo" value="" placeholder="What do you have ToDo?" />
+			<input type="submit" data-type="button" id="add_todo" data-icon="plus" data-iconpos="left" data-mini="true" data-theme="b" value="Add" />
+		</form>
+		<ul id="todos" data-role="listview" data-inset="true"></ul>
+		<div id="footer">
+			<input type="button" data-type="button" id="download" data-icon="arrow-d" data-iconpos="left" data-mini="true" data-theme="b" value="Download" />
+			<input type="button" data-type="button" id="upload" data-icon="arrow-u" data-iconpos="left" data-mini="true" data-theme="b" value="Upload" />
+		</div>
+	</div>
+	<!-- <div data-role="footer">
+		<input type="button" data-type="button" id="download" data-icon="arrow-d" data-iconpos="left" data-mini="true" data-theme="e" value="Download" />
+		<input type="button" data-type="button" id="upload" data-icon="arrow-u" data-iconpos="left" data-mini="true" data-theme="e" value="Upload" />
+	</div> -->
 </div>
-	<div id="footer">
-        <input type="button" data-type="button" id="download" data-icon="arrow-d" data-iconpos="left" data-mini="true" data-theme="b" value="Download" />
-        <input type="button" data-type="button" id="upload" data-icon="arrow-u" data-iconpos="left" data-mini="true" data-theme="b" value="Upload" />
-    </div>
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-	<script src="js/hammer.min.js"></script>
-	<script src="js/modernizr.js"></script>
-	<script src="js/main.js"></script>
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+
+<div data-role="page" id="login" data-title="Login">
+	<div data-role="content">
+		<h1>ToDo</h1>
+		<form>
+			<div data-role="fieldcontain">
+				<label for="username">Username</label>
+				<input name="username" id="username" type="text" autofocus>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="password">Password</label>
+				<input name="password" id="password" type="password">
+			</div>
+			<input id="btLogin" value="Login / Sign up" type="submit" data-type="button" data-theme="b">
+		</form>
+	</div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!-- <script src="js/hammer.min.js"></script> -->
+<!-- <script src="js/modernizr.js"></script> -->
+<script src="js/md5.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
